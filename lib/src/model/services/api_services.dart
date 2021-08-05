@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../movie.dart';
+import '../tv.dart';
 
 class ApiService {
   final Dio _dio = Dio();
@@ -129,6 +130,37 @@ class ApiService {
       var movies = response.data['results'] as List;
       List<Movie> movieList = movies.map((m) => Movie.fromJson(m)).toList();
       return movieList;
+    } catch (error, stacktrace) {
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
+    // ************ TV TOP RATED ************ //
+
+  Future<List<Tv>> getTopRatedTv() async {
+    try {
+      final url = '$baseUrl/tv/top_rated?api_key=$apiKey';
+      print('Api Call TV Top Rated: $url');
+      final response = await _dio.get(url);
+      var tvtop = response.data['results'] as List;
+      List<Tv> tvtopList = tvtop.map((m) => Tv.fromJson(m)).toList();
+      return tvtopList;
+    } catch (error, stacktrace) {
+      print(error);
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
+  Future<List<Tv>> getTopRatedTvGenre(int tvId) async {
+    try {
+      final url = '$baseUrl/discover/tv?with_genres=$tvId&api_key=$apiKey';
+      print('Api Call: $url');
+      final response = await _dio.get(url);
+      var tvtop = response.data['results'] as List;
+      List<Tv> tvtopList = tvtop.map((m) => Tv.fromJson(m)).toList();
+      return tvtopList;
     } catch (error, stacktrace) {
       throw Exception(
           'Exception accoured: $error with stacktrace: $stacktrace');
