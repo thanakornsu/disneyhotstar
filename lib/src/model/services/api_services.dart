@@ -71,4 +71,36 @@ class ApiService {
     }
   }
 
+  // ************ UpComing ************ //
+
+  Future<List<Movie>> getUpcomingMovie() async {
+    try {
+      final url = '$baseUrl/movie/upcoming?api_key=$apiKey';
+      print('Api Call Upcoming: $url');
+      final response = await _dio.get(url);
+      var movies = response.data['results'] as List;
+      List<Movie> movieList = movies.map((m) => Movie.fromJson(m)).toList();
+      return movieList;
+    } catch (error, stacktrace) {
+      print(error);
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
+  Future<List<Movie>> getUpcomingByGenre(int movieId) async {
+    try {
+      final url =
+          '$baseUrl/discover/movie?with_genres=$movieId&api_key=$apiKey';
+      print('Api Call: $url');
+      final response = await _dio.get(url);
+      var movies = response.data['results'] as List;
+      List<Movie> movieList = movies.map((m) => Movie.fromJson(m)).toList();
+      return movieList;
+    } catch (error, stacktrace) {
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
 }
