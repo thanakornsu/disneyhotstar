@@ -38,4 +38,37 @@ class ApiService {
           'Exception accoured: $error with stacktrace: $stacktrace');
     }
   }
+
+   // ************ Popular ************ //
+
+  Future<List<Movie>> getPopularMovie() async {
+    try {
+      final url = '$baseUrl/movie/popular?api_key=$apiKey';
+      print('Api Call Popular: $url');
+      final response = await _dio.get(url);
+      var movies = response.data['results'] as List;
+      List<Movie> movieList = movies.map((m) => Movie.fromJson(m)).toList();
+      return movieList;
+    } catch (error, stacktrace) {
+      print(error);
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
+  Future<List<Movie>> getPopularByGenre(int movieId) async {
+    try {
+      final url =
+          '$baseUrl/discover/movie?with_genres=$movieId&api_key=$apiKey';
+      print('Api Call: $url');
+      final response = await _dio.get(url);
+      var movies = response.data['results'] as List;
+      List<Movie> movieList = movies.map((m) => Movie.fromJson(m)).toList();
+      return movieList;
+    } catch (error, stacktrace) {
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
 }
