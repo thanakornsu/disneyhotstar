@@ -6,6 +6,7 @@ import 'package:disneyhotstar/src/bloc/moviebloc/movie_bloc_event.dart';
 import 'package:disneyhotstar/src/bloc/moviebloc/movie_bloc_state.dart';
 import 'package:disneyhotstar/src/component/title_card.dart';
 import 'package:disneyhotstar/src/model/movie.dart';
+import 'package:disneyhotstar/src/page/detail/detail_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,13 +58,13 @@ class _TitleHeaderState extends State<TitleHeader> {
                       image:
                           'https://image.tmdb.org/t/p/original/${movie.backdropPath}',
                       press: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         MovieDetailScreen(movie: movie),
-                        //   ),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                MovieDetailScreen(movie: movie),
+                          ),
+                        );
                       },
                     );
                   },
